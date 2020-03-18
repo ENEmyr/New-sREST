@@ -1,0 +1,38 @@
+{
+  "name": "new-srest",
+  "version": "1.0.0",
+  "description": "RESTful api services used for communicate with News summarized database.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Untesler/New-sREST.git"
+  },
+  "keywords": [
+    "RESTful"
+  ],
+  "author": "ENEmy",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Untesler/New-sREST/issues"
+  },
+  "homepage": "https://github.com/Untesler/New-sREST#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mkdirp": "^1.0.3",
+    "mongoose": "^5.9.5",
+    "nodemon": "^2.0.2",
+    "swagger-jsdoc": "^3.5.0",
+    "swagger-ui-express": "^4.1.3",
+    "validator": "^12.2.0"
+  }
+}

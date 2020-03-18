@@ -1,0 +1,43 @@
+{
+    "swaggerDefinition" : {
+        "openapi" : "3.0.0",
+        "servers" : [{
+            "description" : "API path",
+            "url" : "http://localhost:3000/api"
+        }],
+        "info" : {
+            "description" : "This a API for communicate with News summarized database.",
+            "version" : "1.0.0",
+            "title" : "New-s API",
+            "contact" : {
+                "email" : "keypgphysics@outlook.com"
+            },
+            "license" : {
+                "name" : "Apache 2.0",
+                "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+            },
+            "securityDefinitions" : {
+                "jwt" : {
+                    "type" : "apiKey",
+                    "name" : "Authorization",
+                    "in" : "header"
+                }
+            },
+            "securitySchemes" : {
+                "bearerAuth" : {
+                    "type" : "http",
+                    "scheme": "bearer",
+                    "bearerFormat" : "JWT"
+                }
+            }
+        }
+    },
+    "tags" : [{
+        "name" : "Developers",
+        "description" : "Secured Developer-only cells"
+    }, {
+        "name" : "Users",
+        "description" : "Operations available to regular user"
+    }],
+    "apis": ["./server/server.js", "./server/routes/*"]
+}

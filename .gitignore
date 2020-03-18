@@ -1,3 +1,9 @@
+# Key
+.key
+
+# Json
+configDB.json
+
 # Logs
 logs
 *.log

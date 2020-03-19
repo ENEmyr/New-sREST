@@ -21,7 +21,8 @@ mkdirp(path.join(__dirname, "assets/logs"), {recursive:true}, err => {
 /* Server configuration */
 // Routes import
 const rawnews        = require('./routes/rawnews'),
-      summarizednews = require('./routes/summarizednews')
+      summarizednews = require('./routes/summarizednews'),
+      token          = require('./routes/token')
 
 // Middernware 
 server.use(bodyparser.urlencoded({ limit: '10mb', extended: true }))
@@ -32,6 +33,7 @@ server.use(cors())
 // Routes
 server.use("/api/rawnews", rawnews)
 server.use("/api/summarizednews", summarizednews)
+server.use("/api/token", token)
 
 // Documentation
 /**

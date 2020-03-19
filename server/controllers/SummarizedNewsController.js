@@ -1,4 +1,5 @@
-const model = require('../models/SummarizedNewsModel')
+const model           = require('../models/SummarizedNewsModel'),
+      MongooseConnect = require('./MongooseConnect')
 
 const cSummarizedNews = async (req, res) => {
     res.status(200).json({
@@ -7,13 +8,19 @@ const cSummarizedNews = async (req, res) => {
 }
 
 const rSummarizedNews = async (req, res) => {
-    const from  = new Date(req.query.from),
-          to    = new Date(req.query.to),
-          limit = req.query.limit
-    res.status(200).json({
-        from: from,
-        to: to,
-        limit: limit
+    const from       = new Date(req.query.from),
+          to         = new Date(req.query.to),
+          limit      = req.query.limit,
+          connector  = new MongooseConnect(),
+          connection = await connector.connect()
+    let result;
+    if (connection) {
+        result = await model.find({})
+    } else {
+        return res.sendStatus(500)
+    }
+    return res.status(200).json({
+        result: result
     })
 }
 

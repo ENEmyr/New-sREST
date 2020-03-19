@@ -148,7 +148,7 @@ router.get('/', controller.rSummarizedNews)
 /**
  * @swagger
  * 
- * /summarizednews:
+ * /summarizednews/{id}:
  *  put:
  *      security:
  *          - bearerAuth: []
@@ -159,7 +159,7 @@ router.get('/', controller.rSummarizedNews)
  *      parameters:
  *          - name: id
  *            description: SummarizedNews id
- *            in: query
+ *            in: path
  *            required: true
  *            type: string
  *            example: '507f191e810c19729de860ea'
@@ -176,12 +176,12 @@ router.get('/', controller.rSummarizedNews)
  *          401:
  *              description: Access token is missing or invalid
  */
-router.post('/', controller.uSummarizedNews)
+router.put('/:id', controller.uSummarizedNews)
 
 /**
  * @swagger
  * 
- * /summarizednews:
+ * /summarizednews/{id}:
  *  delete:
  *      security:
  *          - bearerAuth: []
@@ -192,7 +192,7 @@ router.post('/', controller.uSummarizedNews)
  *      parameters:
  *          - name: id
  *            description: SummarizedNews id
- *            in: query
+ *            in: path
  *            required: true
  *            type: string
  *            example: '507f191e810c19729de860ea'
@@ -202,6 +202,6 @@ router.post('/', controller.uSummarizedNews)
  *          401:
  *              description: Access token is missing or invalid
  */
-router.post('/', controller.dSummarizedNews)
+router.delete('/:id', controller.dSummarizedNews)
 
 module.exports = router

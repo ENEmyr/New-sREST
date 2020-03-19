@@ -152,7 +152,7 @@ router.get('/', controller.rRawNews)
 /**
  * @swagger
  * 
- * /rawnews:
+ * /rawnews/{id}:
  *  put:
  *      security:
  *          - bearerAuth: []
@@ -163,7 +163,7 @@ router.get('/', controller.rRawNews)
  *      parameters:
  *          - name: id
  *            description: RawNews id
- *            in: query
+ *            in: path
  *            required: true
  *            type: string
  *            example: '507f191e810c19729de860ea'
@@ -180,12 +180,12 @@ router.get('/', controller.rRawNews)
  *          401:
  *              description: Access token is missing or invalid
  */
-router.post('/', controller.uRawNews)
+router.put('/:id', controller.uRawNews)
 
 /**
  * @swagger
  * 
- * /rawnews:
+ * /rawnews/{id}:
  *  delete:
  *      security:
  *          - bearerAuth: []
@@ -196,7 +196,7 @@ router.post('/', controller.uRawNews)
  *      parameters:
  *          - name: id
  *            description: RawNews id
- *            in: query
+ *            in: path
  *            required: true
  *            type: string
  *            example: '507f191e810c19729de860ea'
@@ -206,6 +206,6 @@ router.post('/', controller.uRawNews)
  *          401:
  *              description: Access token is missing or invalid
  */
-router.post('/', controller.dRawNews)
+router.delete('/:id', controller.dRawNews)
 
 module.exports = router

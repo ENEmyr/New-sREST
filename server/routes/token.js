@@ -4,6 +4,25 @@ const express    = require('express'),
 
 /**
  * @swagger
+ *
+ * definitions:
+ *   payload:
+ *     type: object
+ *     required:
+ *       - name
+ *       - dt
+ *     properties:
+ *       name:
+ *         type: string
+ *         example: 'summarizeServer'
+ *       dt:
+ *          type: string
+ *          format: date-time
+ *          example: '2016-08-29T09:12:33.001Z'
+ */
+
+/**
+ * @swagger
  * /token:
  *  get:
  *      security:
@@ -52,21 +71,13 @@ router.get('/', controller.verifyToken)
  *   tags:
  *       - Developers
  *   parameters:
- *       - name: payload
+ *       - in: body
+ *         name: payload
  *         description: Payload object
- *         in: body
+ *         required: true
  *         type: object
- *         required:
- *           - name
- *           - dt
- *         properties:
- *           name:
- *               type: string
- *               example: 'summarizedServer'
- *           dt:
- *               type: string
- *               format: date-time
- *               example: '2016-08-29T09:12:33.001Z'
+ *         schema:
+ *          $ref: '#/definitions/payload'
  *   responses:
  *       200:
  *           description: Generate complete
@@ -80,7 +91,11 @@ router.get('/', controller.verifyToken)
  *                          token:
  *                              type: string
  *                              example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3c3NlcnZlciIsImR0IjoxNTE2MjM5MDIyfQ.gtq1HMmeN7mnYdKfAHhXXwfrLYsaEox92rh79Gc3OiQ'
+ *       400:
+ *           description: Invalid payload 
  *       401:
  *           description: Access token is missing or invalid
  */
 router.post('/', controller.genToken)
+
+module.exports = router

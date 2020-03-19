@@ -1,38 +1,58 @@
-const DB_CONFIG = require('../config/config_db');
-const MONGOOSE  = require('mongoose');
+const DB_CONFIG = require('../config/configDB.json');
 
-const connect = () => {
-  //server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-  //replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } }
-  const options = {
-    user            : DB_CONFIG.username,
-    pass            : DB_CONFIG.password,
-    useNewUrlParser : true,
-    keepAlive       : 300000,
-    connectTimeoutMS: 30000
-  };
-  const state = MONGOOSE.connection.readyState;
-  if(state === 0 || state === 3){
-    MONGOOSE.connect(DB_CONFIG.db, options).catch(error => {
-      if (error) {
-        console.error(error.message);
-        return false;
-      }
-    });
-    return true;
-  } else {
-    return true;
+class MongooseConnect {
+  constructor(username, password, connectionURI) {
+    const options = {
+      user              : username || DB_CONFIG.username,
+      pass              : password || DB_CONFIG.password,
+      useUnifiedTopology: true,
+      useNewUrlParser   : true,
+      keepAlive         : 300000,
+      connectTimeoutMS  : 30000
+    }
+    this.options = options
+    this.connectionURI = connectionURI || DB_CONFIG.connectionURI
+    this.mongoose = require('mongoose')
   }
-  
+
+  set options(val) {
+    return this._options = val
+  }
+
+  set connectionURI(val) {
+    return this._connectionURI = val
+  }
+
+  get options() {
+    return this.options
+  }
+
+  get connectionURI(){
+    return this.connectionURI
+  }
+
+  get state() {
+    return this.mongoose.connection.readyState
+  }
+
+  async connect() {
+    const state = this.mongoose.connection.readyState;
+    if(state === 0 || state === 3){
+      try {
+        await this.mongoose.connect(this.connectionURI, this.options)
+      } catch (error) {
+        return false
+      }
+      return true
+    } else {
+      return true
+    }
+  }
+
+  disconnect() {
+    this.mongoose.connection.close()
+    return true
+  }
 }
 
-const disconnect = () => {
-  MONGOOSE.connection.close();
-  return true;
-}
-
-const state = () => {
-  return MONGOOSE.connection.readyState;
-}
-
-module.exports = {MONGOOSE, connect, disconnect, state};
+module.exports = MongooseConnect

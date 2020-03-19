@@ -53,15 +53,17 @@ const express    = require('express'),
  *          format: date-time
  *          example: '2016-08-29T09:12:33.001Z'
  *   SummarizedNewsGet:
- *      allOf:
- *          - $ref: '#/definitions/SummarizedNews'
- *          - required:
- *              - insertDt
- *          - properties:
- *              insertDt:
- *                  type: string
- *                  format: date-time
- *                  example: '2016-08-29T09:12:33.001Z'
+ *      type: array
+ *      items:
+ *          allOf:
+ *              - $ref: '#/definitions/SummarizedNews'
+ *              - required:
+ *                  - insertDt
+ *              - properties:
+ *                  insertDt:
+ *                      type: string
+ *                      format: date-time
+ *                      example: '2016-08-29T09:12:33.001Z'
  */
 
 /**
@@ -71,7 +73,8 @@ const express    = require('express'),
  *  post:
  *      security:
  *          - bearerAuth: []
- *      description: submit new summarized news
+ *      description: Submit new summarized news
+ *      summary: submit new summarized news
  *      produces:
  *          - application/json
  *      tags:
@@ -97,14 +100,15 @@ router.post('/', controller.cSummarizedNews)
  * 
  * /summarizednews:
  *  get:
- *      description: list summarized news
+ *      description: List summarized news
+ *      summary: list summarized news
  *      produces:
  *          - application/json
  *      tags:
  *          - Users
  *      parameters:
  *          - name: from
- *            description: list summarized news from <full-date>T<full-time>
+ *            description: List summarized news from <full-date>T<full-time>
  *            in: query
  *            required: true
  *            type: object
@@ -113,7 +117,7 @@ router.post('/', controller.cSummarizedNews)
  *              format: date-time
  *              example: '2016-08-29T09:12:33.001Z'
  *          - name: to
- *            description: list summarized news to <full-date>T<full-time>
+ *            description: List summarized news to <full-date>T<full-time>
  *            in: query
  *            required: true
  *            type: object
@@ -122,7 +126,7 @@ router.post('/', controller.cSummarizedNews)
  *              format: date-time
  *              example: '2016-08-29T09:12:33.001Z'
  *          - name: limit
- *            description: summarized news limit
+ *            description: Summarized news limit
  *            in: query
  *            required: true
  *            type: object
@@ -148,7 +152,8 @@ router.get('/', controller.rSummarizedNews)
  *  put:
  *      security:
  *          - bearerAuth: []
- *      description: update summarized news
+ *      description: Update summarized news
+ *      summary: update summarized news
  *      tags:
  *          - Developers
  *      parameters:
@@ -180,7 +185,8 @@ router.post('/', controller.uSummarizedNews)
  *  delete:
  *      security:
  *          - bearerAuth: []
- *      description: delete summarized news
+ *      description: Delete summarized news
+ *      summary: delete summarized news
  *      tags:
  *          - Developers
  *      parameters:

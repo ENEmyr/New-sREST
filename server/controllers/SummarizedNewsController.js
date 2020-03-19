@@ -7,8 +7,13 @@ const cSummarizedNews = async (req, res) => {
 }
 
 const rSummarizedNews = async (req, res) => {
+    const from  = new Date(req.query.from),
+          to    = new Date(req.query.to),
+          limit = req.query.limit
     res.status(200).json({
-        success: true
+        from: from,
+        to: to,
+        limit: limit
     })
 }
 

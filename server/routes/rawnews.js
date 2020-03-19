@@ -53,15 +53,17 @@ const express    = require('express'),
  *          format: date-time
  *          example: '2016-08-29T09:12:33.001Z'
  *   RawNewsGet:
- *      allOf:
- *          - $ref: '#/definitions/RawNews'
- *          - required:
- *              - insertDt
- *          - properties:
- *              insertDt:
- *                  type: string
- *                  format: date-time
- *                  example: '2016-08-29T09:12:33.001Z'
+ *      type: array
+ *      items:
+ *          allOf:
+ *              - $ref: '#/definitions/RawNews'
+ *              - required:
+ *                  - insertDt
+ *              - properties:
+ *                  insertDt:
+ *                      type: string
+ *                      format: date-time
+ *                      example: '2016-08-29T09:12:33.001Z'
  */
 
 /**
@@ -71,7 +73,8 @@ const express    = require('express'),
  *  post:
  *      security:
  *          - bearerAuth: []
- *      description: submit new raw news
+ *      description: Submit new raw news
+ *      summary: submit new raw news
  *      produces:
  *          - application/json
  *      tags:
@@ -97,14 +100,17 @@ router.post('/', controller.cRawNews)
  * 
  * /rawnews:
  *  get:
- *      description: list raw news
+ *      security:
+ *          - bearerAuth: []
+ *      description: List raw news
+ *      summary: list raw news
  *      produces:
  *          - application/json
  *      tags:
  *          - Developers
  *      parameters:
  *          - name: from
- *            description: list raw news from <full-date>T<full-time>
+ *            description: List raw news from <full-date>T<full-time>
  *            in: query
  *            required: true
  *            type: object
@@ -113,7 +119,7 @@ router.post('/', controller.cRawNews)
  *              format: date-time
  *              example: '2016-08-29T09:12:33.001Z'
  *          - name: to
- *            description: list raw news to <full-date>T<full-time>
+ *            description: List raw news to <full-date>T<full-time>
  *            in: query
  *            required: true
  *            type: object
@@ -122,7 +128,7 @@ router.post('/', controller.cRawNews)
  *              format: date-time
  *              example: '2016-08-29T09:12:33.001Z'
  *          - name: limit
- *            description: raw news limit
+ *            description: Raw news limit
  *            in: query
  *            required: true
  *            type: object
@@ -150,7 +156,8 @@ router.get('/', controller.rRawNews)
  *  put:
  *      security:
  *          - bearerAuth: []
- *      description: update raw news
+ *      description: Update raw news
+ *      summary: update raw news
  *      tags:
  *          - Developers
  *      parameters:
@@ -182,7 +189,8 @@ router.post('/', controller.uRawNews)
  *  delete:
  *      security:
  *          - bearerAuth: []
- *      description: delete raw news
+ *      description: Delete raw news
+ *      summary: delete raw news
  *      tags:
  *          - Developers
  *      parameters:

@@ -10,9 +10,9 @@ class MongooseConnect {
       keepAlive         : 300000,
       connectTimeoutMS  : 30000
     }
-    this.options = options
+    this.options       = options
     this.connectionURI = connectionURI || DB_CONFIG.connectionURI
-    this.mongoose = require('mongoose')
+    this.mongoose      = require('mongoose')
   }
 
   set options(val) {
@@ -24,15 +24,15 @@ class MongooseConnect {
   }
 
   get options() {
-    return this.options
+    return this._options
   }
 
   get connectionURI(){
-    return this.connectionURI
+    return this._connectionURI
   }
 
   get state() {
-    return this.mongoose.connection.readyState
+    return this._mongoose.connection.readyState
   }
 
   async connect() {

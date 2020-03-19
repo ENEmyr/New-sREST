@@ -16,6 +16,7 @@ const rSummarizedNews = async (req, res) => {
     let result;
     if (connection) {
         result = await model.find({})
+        connector.disconnect()
     } else {
         return res.sendStatus(500)
     }

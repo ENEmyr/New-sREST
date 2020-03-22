@@ -11,6 +11,10 @@ keypgphysics@outlook.com
 ### /docs
 
 #### GET
+##### Summary:
+
+generate a API document and return in json format
+
 ##### Description:
 
 Generate a API document and return in json format
@@ -24,15 +28,13 @@ Generate a API document and return in json format
 ### /rawnews
 
 #### POST
-##### Description:
+##### Summary:
 
 submit new raw news
 
-##### Parameters
+##### Description:
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| rawnews | body | RawNews object | Yes | [RawNews](#rawnews) |
+Submit new raw news
 
 ##### Responses
 
@@ -40,6 +42,7 @@ submit new raw news
 | ---- | ----------- |
 | 201 | Raw News has been submitted on database |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
@@ -48,17 +51,21 @@ submit new raw news
 | bearerAuth | |
 
 #### GET
-##### Description:
+##### Summary:
 
 list raw news
+
+##### Description:
+
+List raw news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| from | query | list raw news from <full-date>T<full-time> | Yes | dateTime |
-| to | query | list raw news to <full-date>T<full-time> | Yes | dateTime |
-| limit | query | raw news limit | Yes | integer |
+| from | query | List raw news from <date-time>, while <date-time> according to RFC3339 | No | dateTime |
+| to | query | List raw news to <date-time>, while <date-time> according to RFC3339 | No | dateTime |
+| limit | query | Raw news limit | No | integer |
 
 ##### Responses
 
@@ -66,18 +73,30 @@ list raw news
 | ---- | ----------- |
 | 200 | A successful response |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
+
+##### Security
+
+| Security Schema | Scopes |
+| --- | --- |
+| bearerAuth | |
+
+### /rawnews/{id}
 
 #### PUT
-##### Description:
+##### Summary:
 
 update raw news
+
+##### Description:
+
+Update raw news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| id | query | RawNews id | Yes | string |
-| rawnew | body | RawNews object | Yes | [RawNews](#rawnews) |
+| id | path | RawNews id | Yes | string |
 
 ##### Responses
 
@@ -85,6 +104,7 @@ update raw news
 | ---- | ----------- |
 | 201 | Raw News has been updated |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
@@ -93,15 +113,19 @@ update raw news
 | bearerAuth | |
 
 #### DELETE
-##### Description:
+##### Summary:
 
 delete raw news
+
+##### Description:
+
+Delete raw news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| id | query | RawNews id | Yes | string |
+| id | path | RawNews id | Yes | string |
 
 ##### Responses
 
@@ -109,6 +133,7 @@ delete raw news
 | ---- | ----------- |
 | 201 | Raw News has been deleted |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
@@ -119,15 +144,9 @@ delete raw news
 ### /summarizednews
 
 #### POST
-##### Description:
+##### Summary:
 
 submit new summarized news
-
-##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| summarizednews | body | SummarizedNews object | Yes | [SummarizedNews](#summarizednews) |
 
 ##### Responses
 
@@ -135,6 +154,7 @@ submit new summarized news
 | ---- | ----------- |
 | 201 | Raw News has been submitted on database |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
@@ -143,42 +163,53 @@ submit new summarized news
 | bearerAuth | |
 
 #### GET
-##### Description:
+##### Summary:
 
 list summarized news
+
+##### Description:
+
+List summarized news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| from | query | list summarized news from <full-date>T<full-time> | Yes | dateTime |
-| to | query | list summarized news to <full-date>T<full-time> | Yes | dateTime |
-| limit | query | summarized news limit | Yes | integer |
+| from | query | List summarized news from <date-time>, while <date-time> according to RFC3339 | No | dateTime |
+| to | query | List summarized news to <date-time>, while <date-time> according to RFC3339 | No | dateTime |
+| limit | query | Summarized news limit | No | integer |
 
 ##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | A successful response |
+| 500 | Can't connect to the server right now |
+
+### /summarizednews/{id}
 
 #### PUT
-##### Description:
+##### Summary:
 
 update summarized news
+
+##### Description:
+
+Update summarized news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| id | query | SummarizedNews id | Yes | string |
-| summarizednew | body | SummarizedNews object | Yes | [SummarizedNews](#summarizednews) |
+| id | path | SummarizedNews id | Yes | string |
 
 ##### Responses
 
 | Code | Description |
 | ---- | ----------- |
-| 201 | Raw News has been updated |
+| 200 | Resource updated successfully |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
@@ -187,28 +218,92 @@ update summarized news
 | bearerAuth | |
 
 #### DELETE
-##### Description:
+##### Summary:
 
 delete summarized news
+
+##### Description:
+
+Delete summarized news
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| id | query | SummarizedNews id | Yes | string |
+| id | path | SummarizedNews id | Yes | string |
 
 ##### Responses
 
 | Code | Description |
 | ---- | ----------- |
-| 201 | Raw News has been deleted |
+| 204 | Resource deleted successfully |
 | 401 | Access token is missing or invalid |
+| 500 | Can't connect to the server right now |
 
 ##### Security
 
 | Security Schema | Scopes |
 | --- | --- |
 | bearerAuth | |
+
+### /token
+
+#### GET
+##### Summary:
+
+verify access token
+
+##### Description:
+
+Verify access token
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| accessToken | body | Access token that use to access the api | Yes | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Verification complete |
+| 401 | Access token is missing or invalid |
+
+##### Security
+
+| Security Schema | Scopes |
+| --- | --- |
+| bearerauth | |
+
+#### POST
+##### Summary:
+
+generate a permanent access token
+
+##### Description:
+
+Generate a permanent access token
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| payload | body | Payload object | Yes | [payload](#payload) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Generate complete |
+| 400 | Invalid payload |
+| 401 | Access token is missing or invalid |
+
+##### Security
+
+| Security Schema | Scopes |
+| --- | --- |
+| bearerauth | |
 
 ### Models
 
@@ -217,40 +312,47 @@ delete summarized news
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| title | string |  | Yes |
-| content | string |  | Yes |
-| sourceUrl | string |  | Yes |
-| imageUrl | string |  | Yes |
-| author | string |  | Yes |
-| publisher | string |  | No |
-| category | string |  | No |
-| tags | [ string ] |  | No |
-| language | [ string ] |  | No |
-| publishAt | dateTime |  | Yes |
+| title | string | News title | Yes |
+| content | string | News content | Yes |
+| sourceUrl | string | News source url | Yes |
+| imageUrl | string | News cover image url | Yes |
+| author | string | Author name or publisher name | Yes |
+| publisher | string | Publisher name | No |
+| category | string | Category of the News | No |
+| tags | [ string ] | News tags | No |
+| language | [ string ] | The language that used in News content | No |
+| publishAt | dateTime | Publish date time | Yes |
 
 #### RawNewsGet
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| RawNewsGet |  |  |  |
+| RawNewsGet | array |  |  |
 
 #### SummarizedNews
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| title | string |  | Yes |
-| content | string |  | Yes |
-| sourceUrl | string |  | Yes |
-| imageUrl | string |  | Yes |
-| author | string |  | Yes |
-| publisher | string |  | No |
-| category | string |  | No |
-| tags | [ string ] |  | No |
-| language | [ string ] |  | No |
-| publishAt | dateTime |  | Yes |
+| title | string | News title | Yes |
+| content | string | News content | Yes |
+| sourceUrl | string | News source url | Yes |
+| imageUrl | string | News cover image url | Yes |
+| author | string | Author name or publisher name | Yes |
+| publisher | string | Publisher name | No |
+| category | string | Category of the News | No |
+| tags | [ string ] | News tags | No |
+| language | [ string ] | The language that used in News content | No |
+| publishAt | dateTime | Publish date time | Yes |
 
 #### SummarizedNewsGet
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| SummarizedNewsGet |  |  |  |
+| SummarizedNewsGet | array |  |  |
+
+#### payload
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Requestor name | Yes |
+| dt | dateTime | Created date time | Yes |

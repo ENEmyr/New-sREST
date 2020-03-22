@@ -1,6 +1,7 @@
-const express    = require('express'),
-      router     = express.Router(),
-      controller = require('../controllers/TokenController')
+const express             = require('express'),
+      router              = express.Router(),
+      controller          = require('../controllers/TokenController'),
+      { authMiddernware } = require('../controllers/Authenication')
 
 /**
  * @swagger
@@ -14,9 +15,11 @@ const express    = require('express'),
  *     properties:
  *       name:
  *         type: string
+ *         description: Requestor name
  *         example: 'summarizeServer'
  *       dt:
  *          type: string
+ *          description: Created date time
  *          format: date-time
  *          example: '2016-08-29T09:12:33.001Z'
  */
@@ -56,7 +59,7 @@ const express    = require('express'),
  *          401:
  *              description: Access token is missing or invalid
  */
-router.get('/', controller.verifyToken)
+router.get('/', authMiddernware, controller.verifyToken)
 
 /**
  * @swagger
@@ -96,6 +99,6 @@ router.get('/', controller.verifyToken)
  *       401:
  *           description: Access token is missing or invalid
  */
-router.post('/', controller.genToken)
+router.post('/', authMiddernware, controller.genToken)
 
 module.exports = router

@@ -1,12 +1,27 @@
-const express           = require('express'),
-      bodyparser        = require('body-parser'),
-      cors              = require('cors'),
-      bearertoken       = require('express-bearer-token'),
-      path              = require('path'),
-      mkdirp            = require('mkdirp'),
-      swaggerJSDoc      = require('swagger-jsdoc'),
-      swaggerUi         = require('swagger-ui-express'),
-      SwaggerDefinition = require('./assets/json/SwaggerDefinition.json')
+const express            = require('express'),
+      cors               = require('cors'),
+      bearertoken        = require('express-bearer-token'),
+      path               = require('path'),
+      mkdirp             = require('mkdirp'),
+      validator          = require('validator'),
+      swaggerJSDoc       = require('swagger-jsdoc'),
+      swaggerUi          = require('swagger-ui-express'),
+      SwaggerDefinition  = require('./assets/json/SwaggerDefinition.json'),
+      AVAILABLE_JSON_KEY = [
+        "title",
+        "content",
+        "sourceUrl",
+        "imageUrl",
+        "author",
+        "publisher",
+        "category",
+        "tags",
+        "language",
+        "publishAt",
+        "name",
+        "dt",
+        ""
+      ]
 
 const server     = express(),
       serverPort = process.env.PORT || 3000,
@@ -18,6 +33,11 @@ mkdirp(path.join(__dirname, "assets/logs"), {recursive:true}, err => {
     else console.info('assets/logs folder is ready.')
 })
 
+function jsonFilter(key, value) {
+  if (!AVAILABLE_JSON_KEY.includes(key) && !validator.isInt(key)) return undefined
+  return value
+}
+
 /* Server configuration */
 // Routes import
 const rawnews        = require('./routes/rawnews'),
@@ -25,10 +45,15 @@ const rawnews        = require('./routes/rawnews'),
       token          = require('./routes/token')
 
 // Middernware 
-server.use(bodyparser.urlencoded({ limit: '10mb', extended: true }))
-server.use(bodyparser.json({ limit: '10mb', extended: true }))
+server.use(express.json({ limit: '10mb', reviver: jsonFilter}))
+server.use(express.urlencoded({ limit: '10mb', extended: true }))
 server.use(bearertoken())
+// used for set HTTP response header: Access-Control-Allow-Origin: *
 server.use(cors())
+// Handling error occurs in the middernware
+server.use((error, req, res, next) => {
+  return res.sendStatus(400)
+})
 
 // Routes
 server.use("/api/rawnews", rawnews)

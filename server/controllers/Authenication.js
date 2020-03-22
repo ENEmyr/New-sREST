@@ -5,7 +5,7 @@ const jwt         = require("jsonwebtoken"),
         path.resolve(__dirname, "../config/private.key")
       )
 
-const authenicate = async (token) => {
+const authenticate = async (token) => {
   const decode = jwt.verify(token, PRIVATE_KEY, async (err, decoded) => {
     if (err) {
       console.error(`Authenicate : Verify token failed becase (${err}).`)
@@ -18,4 +18,10 @@ const authenicate = async (token) => {
   return decode;
 };
 
-module.exports = { authenicate };
+const authMiddernware = async (req, res, next) => {
+  const token = await authenticate(req.token)
+  if (token) return next()
+  else return res.sendStatus(401)
+}
+
+module.exports = { authenticate, authMiddernware };

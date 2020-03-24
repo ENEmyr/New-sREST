@@ -20,6 +20,7 @@ const express            = require('express'),
         "publishAt",
         "name",
         "dt",
+        "accessToken",
         ""
       ]
 
@@ -70,8 +71,6 @@ server.use("/api/token", token)
  *      summary: generate a API document and return in json format
  *      tags:
  *          - Users
- *      produces:
- *          - application/json
  *      responses:
  *          200:
  *              description: A successful response

@@ -15,13 +15,6 @@
             "license" : {
                 "name" : "Apache 2.0",
                 "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
-            },
-            "securityDefinitions" : {
-                "jwt" : {
-                    "type" : "apiKey",
-                    "name" : "Authorization",
-                    "in" : "header"
-                }
             }
         }
     },

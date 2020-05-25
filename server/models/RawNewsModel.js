@@ -12,7 +12,8 @@ const schema = mongoose.Schema({
     tags     : [ String ],
     language : [ String ],
     publishAt: {type: Date, required: true},
-    insertDt : {type: Date, required: true, default: new Date(timestamp)}
+    insertDt : {type: Date, required: true, default: new Date(timestamp)},
+    summarizeStatus: {type: Boolean, required: true, default: false}
 
 }, { collection : 'RawNews' })
 

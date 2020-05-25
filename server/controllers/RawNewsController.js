@@ -32,24 +32,29 @@ const cRawNews = async (req, res) => {
 }
 
 const rRawNews = async (req, res) => {
-    const fromDt     = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date('1970-1-1'),
-          toDt       = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(),
-          limit      = parseInt(req.query.limit),
-          connector  = new MongooseConnect(),
-          connection = await connector.connect()
-    let result;
+    const fromDt          = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date('1970-1-1'),
+          toDt            = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(),
+          summarizeStatus = typeof req.query.summarizeStatus !== 'undefined' ? req.query.summarizeStatus : false,
+          limit           = parseInt(req.query.limit),
+          connector       = new MongooseConnect(),
+          connection      = await connector.connect()
+    let result,
+        findParams = {"publishAt": {"$gte": fromDt, "$lt": toDt}};
     if (!connection) return res.sendStatus(500)
     try {
+        if (summarizeStatus) {
+            if (typeof(summarizeStatus) === 'string'){
+                if (summarizeStatus.toLowerCase() === 'true' || summarizeStatus.toLowerCase() === 'false'){
+                    findParams.summarizeStatus = summarizeStatus.toLowerCase() === 'true' ? true : false
+                }
+            }
+        }
         if (typeof limit !== 'undefined' && isNaN(limit) !== true) {
-            result = await model.find({
-                "publishAt": {"$gte": fromDt, "$lt": toDt}
-            })
+            result = await model.find(findParams)
             .limit(limit)
             .sort({ insertDt: -1 })
         } else {
-            result = await model.find({
-                "publishAt": {"$gte": fromDt, "$lt": toDt}
-            })
+            result = await model.find(findParams)
             .sort({ insertDt: -1 })
         }
         return res.status(200).json(result)
@@ -71,6 +76,9 @@ const uRawNews = async (req, res) => {
     delete rawNews.dt
     delete rawNews.name
     if (typeof rawNews.publishAt !== 'undefined' && !validator.isRFC3339(rawNews.publishAt)) return res.sendStatus(400)
+    if (typeof rawNews.summarizeStatus !== 'undefined' && typeof rawNews.summarizeStatus === 'string' || 1===1) // bypass just for now
+        rawNews.summarizeStatus = true //bypass just for now
+        //rawNews.summarizeStatus = rawNews.summarizeStatus.toLowerCase() === 'true' ? true : false
     if (Object.entries(rawNews).length === 0 && rawNews.constructor === Object) return res.sendStatus(200)
     try {
         await model.updateOne({ _id: rawNewsId }, rawNews)

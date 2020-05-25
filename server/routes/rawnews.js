@@ -157,6 +157,12 @@ router.post('/', authMiddernware, controller.cRawNews)
  *              format: int32
  *              minimum: 0
  *              example: 50
+ *          - name: summarizeStatus
+ *            description: Get a raw news that match the status
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: boolean
  *      responses:
  *          200:
  *              description: A successful response

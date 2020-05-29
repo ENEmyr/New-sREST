@@ -32,11 +32,12 @@ const cSummarizedNews = async (req, res) => {
 }
 
 const rSummarizedNews = async (req, res) => {
-    const fromDt     = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date('1970-1-1'),
-          toDt       = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(),
-          limit      = parseInt(req.query.limit),
-          connector  = new MongooseConnect(),
-          connection = await connector.connect()
+    const localOffset = (new Date).getTimezoneOffset() * -60000,
+          fromDt      = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date(localOffset),
+          toDt        = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(Date.now() + localOffset),
+          limit       = parseInt(req.query.limit),
+          connector   = new MongooseConnect(),
+          connection  = await connector.connect()
     let result;
     if (!connection) return res.sendStatus(500)
     try {

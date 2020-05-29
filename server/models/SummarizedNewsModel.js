@@ -1,5 +1,6 @@
-const mongoose  = require('mongoose'),
-      timestamp = Date.now()
+const mongoose    = require('mongoose'),
+      localOffset = (new Date).getTimezoneOffset() * -60000,
+      timestamp   = Date.now(Date.now() + localOffset)
 
 const schema = mongoose.Schema({
     title    : {type:String, required: true},

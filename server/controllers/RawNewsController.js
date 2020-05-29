@@ -32,8 +32,9 @@ const cRawNews = async (req, res) => {
 }
 
 const rRawNews = async (req, res) => {
-    const fromDt          = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date('1970-1-1'),
-          toDt            = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(),
+    const localOffset     = (new Date).getTimezoneOffset() * -60000,
+          fromDt          = typeof req.query.from !== 'undefined' ? new Date(req.query.from) : new Date(localOffset),
+          toDt            = typeof req.query.to !== 'undefined' ? new Date(req.query.to) : new Date(Date.now()+localOffset),
           summarizeStatus = typeof req.query.summarizeStatus !== 'undefined' ? req.query.summarizeStatus : false,
           limit           = parseInt(req.query.limit),
           connector       = new MongooseConnect(),
@@ -45,8 +46,10 @@ const rRawNews = async (req, res) => {
         if (summarizeStatus) {
             if (typeof(summarizeStatus) === 'string'){
                 if (summarizeStatus.toLowerCase() === 'true' || summarizeStatus.toLowerCase() === 'false'){
-                    findParams.summarizeStatus = summarizeStatus.toLowerCase() === 'true' ? true : false
+                    findParams['summarizeStatus'] = summarizeStatus.toLowerCase() === 'true' ? true : false
                 }
+            } else if (typeof(summarizeStatus) === 'boolean') {
+                findParams['summarizeStatus'] = summarizeStatus
             }
         }
         if (typeof limit !== 'undefined' && isNaN(limit) !== true) {

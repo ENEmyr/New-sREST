@@ -11,7 +11,7 @@ const authenticate = async (token) => {
       console.error(`Authenicate : Verify token failed becase (${err}).`)
       return false;
     } else {
-      console.info('Authenticate success.')
+      //console.info('Authenticate success.')
       return true
     }
   });
